@@ -54,6 +54,7 @@ export class BlogPage {
         // massage posts
         // @TODO: move this to a pipe.
         post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
+        // @TODO: setup featured image, check ACF fields, etc.
       }
 
       this.posts = data;

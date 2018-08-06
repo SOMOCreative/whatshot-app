@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+
+import { StringsProvider } from '../../providers/strings/strings';
 
 /**
  * Generated class for the PostPage page.
@@ -15,7 +17,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PostPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  loading: any;
+  post: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public s: StringsProvider) {
+    this.post = this.navParams.get('post');
+  }
+
+  ionViewWillEnter() {
+    console.log(this.post, this.navParams.get('post'));
+    
+    this.loading = this.loadingCtrl.create({
+      content: this.s.strings.en.loading.post,
+      spinner: "crescent"
+    });
+    
+    //this.loading.present();
+    
+    
   }
 
   ionViewDidLoad() {

@@ -1,18 +1,18 @@
 <!--
-  Generated template for the PostPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+  PostPage page.
 -->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>post</ion-title>
+    <ion-title>{{post.title.rendered}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+  <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
+  <ion-row no-padding>
+    <div [innerHtml]="post.content.rendered"></div>
+  </ion-row>
 
 </ion-content>
