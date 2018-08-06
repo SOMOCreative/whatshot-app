@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+
+import { PostPage } from './../post/post';
+
+import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
+import { StringsProvider } from '../../providers/strings/strings';
 
 /**
  * Generated class for the BlogPage page.
@@ -15,11 +20,78 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class BlogPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  posts: any;
+  loading: any;
+  morePagesAvailable: boolean;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public remote: RemoteServiceProvider,
+    public loadingCtrl: LoadingController,
+    public s: StringsProvider
+    ) { }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BlogPage');
+
+    this.loading = this.loadingCtrl.create({
+      content: this.s.strings.en.loading.blog,
+      spinner: "crescent"
+    });
+    
+    this.loading.present();
+    this.morePagesAvailable = true;
+
+    this.getBlogPosts();
   }
 
+  getBlogPosts(){
+    this.remote.getBlogPosts().subscribe(data => {
+      console.log(data);
+
+      for(let post of data) {
+        // massage posts
+        // @TODO: move this to a pipe.
+        post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
+      }
+
+      this.posts = data;
+      this.loading.dismiss();
+
+    }, err => {
+      
+      //couldn't get posts, tell the user
+      console.log(err);
+
+    });
+  }
+
+  doInfinite(infiniteScroll) {
+    let page = (Math.ceil(this.posts.length/10)) + 1;
+    let loading = true;
+
+    this.remote.getBlogPosts(page).subscribe(data => {
+      
+      for(let post of data){
+        if(!loading) {
+          infiniteScroll.complete();
+        }
+
+        this.posts.push(post);
+        loading = false;
+      }
+
+    }, err => {
+      
+      // Error? We've probably run out of posts.
+      console.log(err);
+      this.morePagesAvailable = false;
+
+    });
+  }
+
+  viewPost(event, post){
+    this.navCtrl.push(PostPage, { post: post });
+  }
 }
