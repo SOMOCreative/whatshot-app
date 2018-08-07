@@ -4,14 +4,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{post.title.rendered}}</ion-title>
+    <ion-title><span [innerHtml]="post.title.rendered"></span></ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-  <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
-  <ion-row no-padding>
+  <ion-row>
+    <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
+  </ion-row>
+  <ion-row>
     <div [innerHtml]="post.content.rendered"></div>
   </ion-row>
 

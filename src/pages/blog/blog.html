@@ -4,18 +4,14 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Latest News</ion-title>
+    <ion-title>{{s.strings.en.titles.blog}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <!--
 
-    might convert this to a virtual scroll for lazy loading
-
-  -->
   <ion-card *ngFor="let post of posts">
     <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
     <ion-card-content>
@@ -37,10 +33,10 @@
     </ion-row>
   </ion-card>
 
-  <ion-infinite-scroll [enabled]="true" (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll [enabled]="morePagesAvailable" (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
       loadingSpnner="crescent"
-      loadingText="Loading more posts ...">
+      loadingText="{{s.strings.en.loading.more}}">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 

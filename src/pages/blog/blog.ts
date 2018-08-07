@@ -22,7 +22,7 @@ export class BlogPage {
 
   posts: any;
   loading: any;
-  morePagesAvailable: boolean;
+  morePagesAvailable: boolean = true;
 
   constructor(
     public navCtrl: NavController,
@@ -41,23 +41,27 @@ export class BlogPage {
     });
     
     this.loading.present();
-    this.morePagesAvailable = true;
-
     this.getBlogPosts();
   }
 
   getBlogPosts(){
-    this.remote.getBlogPosts().subscribe(data => {
+    this.remote.getPosts("posts").subscribe(data => {
       console.log(data);
 
       for(let post of data) {
         // massage posts
-        // @TODO: move this to a pipe.
+        // @TODO: move this to a pipe?
         post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
         // @TODO: setup featured image, check ACF fields, etc.
+
       }
 
       this.posts = data;
+      
+      if(this.posts.length < 10) {
+        this.morePagesAvailable = false;
+      }
+
       this.loading.dismiss();
 
     }, err => {
@@ -72,7 +76,7 @@ export class BlogPage {
     let page = (Math.ceil(this.posts.length/10)) + 1;
     let loading = true;
 
-    this.remote.getBlogPosts(page).subscribe(data => {
+    this.remote.getPosts("posts", page).subscribe(data => {
       
       for(let post of data){
         if(!loading) {

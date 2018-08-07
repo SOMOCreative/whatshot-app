@@ -16,33 +16,19 @@ export class RemoteServiceProvider {
 
   // Get blog posts endpoint.
   //!
-  getBlogPosts(page: number = 1) {
-    return this.http.get(
+  getPosts(type: string = "posts", page: number = 1) {
+    return this.http.get<any[]>(
       this.apiUrl
-      + 'posts?page=' + page
+      + type
+      + '?page=' + page
     );
   }
 
-/*
-  getBlogPosts(page: number = 1) {
-    return new Promise(resolve => {
-      this.http.get(
-        this.apiUrl
-        + 'posts?page=' + page
-      ).subscribe(data => {
-        resolve(data);
-      }, err => {
-        console.log(err);
-      });
-    });
-  }
-*/
-
-  getBlogPost(id){
-    this.http.get(
+  getPost(type: string = "posts", id: number) {
+    return this.http.get(
       this.apiUrl
-      + 'posts/'
-      + id
+      + type
+      + "/" + id
     );
   }
 

@@ -1,18 +1,43 @@
 <!--
-  Generated template for the EventsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+  Template for the EventsPage page.
 -->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>events</ion-title>
+    <ion-title>{{s.strings.en.titles.events}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <p>@TODO: Events feed goes here.</p>
+
+  <ion-card *ngFor="let post of posts">
+    <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
+    <ion-card-content>
+      <ion-card-title>
+        <div [innerHtml]="post.title.rendered"></div>
+      </ion-card-title>
+      <div [innerHtml]="post.excerpt?.rendered"></div>
+    </ion-card-content>
+    <ion-row no-padding>
+      <ion-col>
+        <button ion-button clear small color="primary" icon-start>
+          <p class="date">{{post.date.split('T')[0]}}</p>
+        </button>
+      </ion-col>
+      <ion-col text-right>
+        <button ion-button small color="primary" (click)="viewPost($event, post)" icon-start>Read More</button>
+      </ion-col>
+
+    </ion-row>
+  </ion-card>
+
+  <ion-infinite-scroll [enabled]="morePagesAvailable" (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpnner="crescent"
+      loadingText="{{s.strings.en.loading.more}}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>

@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { StringsProvider } from '../../providers/strings/strings';
 
 /**
- * Generated class for the PostPage page.
+ * Generated class for the EventPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,10 +12,10 @@ import { StringsProvider } from '../../providers/strings/strings';
 
 @IonicPage()
 @Component({
-  selector: 'page-post',
-  templateUrl: 'post.html',
+  selector: 'page-event',
+  templateUrl: 'event.html',
 })
-export class PostPage {
+export class EventPage {
 
   loading: any;
   post: any;
