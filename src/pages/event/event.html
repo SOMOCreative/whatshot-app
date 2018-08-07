@@ -14,17 +14,9 @@
 
 
 <ion-content padding>
-  <ion-row>
-    <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
-  </ion-row>
-  <ion-row>
-    <p>Event Type: {{post.acf.what}}</p>
-  </ion-row>
-  <ion-row>
-    <p>Event Date: {{post.start_date}}<span *ngIf="post.end_date"> &ndash; {{post.end_date}}</span></p>
-  </ion-row>
-  <ion-row>
-    <div [innerHtml]="post.content.rendered"></div>
-  </ion-row>
-
+  <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
+  <h1 [innerHtml]="post.title.rendered"></h1>
+  <p>Event Type: {{post.acf.what}}</p>
+  <p>Event Date: {{post.start_date}}<span *ngIf="post.end_date"> &ndash; {{post.end_date}}</span></p>
+  <div [innerHtml]="post.content.rendered"></div>
 </ion-content>

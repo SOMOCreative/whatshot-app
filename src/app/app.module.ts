@@ -16,6 +16,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { PostPage } from '../pages/post/post';
 import { EventPage } from '../pages/event/event';
 
+import { CacheModule } from 'ionic-cache';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -38,7 +39,8 @@ import { StringsProvider } from '../providers/strings/strings';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    CacheModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

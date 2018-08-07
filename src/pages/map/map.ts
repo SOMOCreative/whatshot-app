@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { CacheService } from "ionic-cache";
+
 /**
  * Generated class for the MapPage page.
  *
@@ -15,11 +17,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MapPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public cache: CacheService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
+  }
+
+  clearCache(){
+    this.cache.clearAll();
   }
 
 }

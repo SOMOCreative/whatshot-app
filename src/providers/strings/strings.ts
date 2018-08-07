@@ -17,7 +17,8 @@ export class StringsProvider {
         "more": "Loading some more...",
         "map": "Contacting the Google..",
         "travel": "Curating a list of all the best bits...",
-        "mynz": "Your wish-list is my command-list..."
+        "mynz": "Your wish-list is my command-list...",
+        "refresh": "Freshening up..."
       },
       "titles" : {
         "blog": "News & Info",
