@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-import { CacheService } from "ionic-cache";
-
 /**
  * Generated class for the MapPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZDZmE0muFJq--wUqk-oh8TbpWlPP7mAw"></script>
  */
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { CacheService } from "ionic-cache";
+import { StringsProvider } from '../../providers/strings/strings';
+import { Geolocation } from '@ionic-native/geolocation';
+
+declare var google: any;
 
 @IonicPage()
 @Component({
@@ -16,16 +16,38 @@ import { CacheService } from "ionic-cache";
   templateUrl: 'map.html',
 })
 export class MapPage {
+ 
+  @ViewChild('map') mapElement: ElementRef;
+  private map: any;
+  private NZ: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public cache: CacheService) {
+  constructor(
+    private Platform: Platform,
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public cache: CacheService,
+    public s:StringsProvider
+  ) {
+    this.NZ = new google.maps.LatLng(-43.1608567, 170.6003539);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
+    this.Platform.ready().then(() => {
+      this.initMap();
+    });  
   }
 
-  clearCache(){
-    this.cache.clearAll();
+  initMap(){
+    console.log('Map init, innit.');
+    let options = {
+      center: this.NZ,
+      zoom: 5,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    this.map = new google.maps.Map(document.getElementById('map'), options);
+
   }
 
 }

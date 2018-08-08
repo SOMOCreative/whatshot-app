@@ -60,7 +60,7 @@ import { StringsProvider } from '../providers/strings/strings';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RemoteServiceProvider,
-    StringsProvider,
+    StringsProvider
   ]
 })
 export class AppModule {}

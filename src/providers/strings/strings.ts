@@ -13,7 +13,7 @@ export class StringsProvider {
       "loading" : {
         "blog": "Hold tight, we're getting you the very latest news and info...",
         "post": "Getting all the details...",
-        "events": "Putting our fingers on the pulse...",
+        "events": "Putting your fingers on the pulse...",
         "more": "Loading some more...",
         "map": "Contacting the Google..",
         "travel": "Curating a list of all the best bits...",
