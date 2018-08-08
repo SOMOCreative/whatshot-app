@@ -4,12 +4,12 @@ import { CacheService } from "ionic-cache";
 
 /*
   RemoteServiceProvider provider.
-
 */
+
 @Injectable()
 export class RemoteServiceProvider {
 
-  apiUrl = "https://www.destination-nz.com/wp-json/wp/v2/";
+  private apiUrl:string = "https://www.destination-nz.com/wp-json/wp/v2/";
 
   constructor(public http: HttpClient, public cache: CacheService) {
     console.log('Hello RemoteServiceProvider Provider');
@@ -17,16 +17,25 @@ export class RemoteServiceProvider {
 
   // Get blog posts endpoint.
   getPosts(type: string = "posts", page: number = 1) {
-/*    let url = this.apiUrl + type + '?page=' + page;
+    let url = this.apiUrl + type + '?page=' + page;
     let request = this.http.get(url);
+    let groupKey = type;
 
-    return this.cache.loadFromObservable(url, request, type);
-  */ 
+    //delayed observable is nice, but it needs to look like it's doing something! or does it?
+    //if(refrehser){
+    //  console.log('loading from delayed observable');
+    //  return this.cache.loadFromDelayedObservable(url, request, groupKey, null, 'all');
+    //} else {
+    console.log('loading from observable');
+    return this.cache.loadFromObservable(url, request, groupKey);
+    //}
+/*
     return this.http.get<any[]>(
       this.apiUrl
       + type
       + '?page=' + page
     );
+*/
   }
 
   getPost(type: string = "posts", id: number) {

@@ -45,14 +45,16 @@ export class BlogPage {
     
     this.loading.present();
     
-    this.getBlogPosts();
+    this.getBlogPosts(null);
   }
 
-  getBlogPosts(/*refresher*/) {
-    //if(refresher) this.remote.clearCacheGroup("posts");
-
-    this.remote.getPosts("posts").subscribe(data => {
-
+  getBlogPosts(refresher) {
+    this.remote.getPosts("posts", 1).subscribe(data => {
+      if(refresher){
+        console.log('refreshing');
+        this.cache.clearGroup("posts");
+      }
+     
       // massage posts.
       for(let post of data) {
         // @TODO: move this to a pipe?
@@ -69,7 +71,7 @@ export class BlogPage {
 
       // hide loading overlay.
       this.loading.dismiss();
-      //if(refresher) refresher.complete();
+      if(refresher) refresher.complete();
       
     }, err => {
       
@@ -106,9 +108,9 @@ export class BlogPage {
   viewPost(event, post){
     this.navCtrl.push(PostPage, { post: post });
   }
-/*
+
   forceReload(refresher){
     this.getBlogPosts(refresher);
   }
-  */
+  
 }
