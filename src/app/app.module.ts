@@ -15,6 +15,8 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { PostPage } from '../pages/post/post';
 import { EventPage } from '../pages/event/event';
+import { CategoryPage } from '../pages/category/category';
+import { DirectorypostPage } from '../pages/directorypost/directorypost';
 
 import { CacheModule } from 'ionic-cache';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -34,13 +36,15 @@ import { StringsProvider } from '../providers/strings/strings';
     HomePage,
     PostPage,
     EventPage,
+    CategoryPage,
+    DirectorypostPage,
     TabsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    CacheModule.forRoot()
+    CacheModule.forRoot({ keyPrefix: 'whnz-app-cache' })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -53,6 +57,8 @@ import { StringsProvider } from '../providers/strings/strings';
     HomePage,
     PostPage,
     EventPage,
+    CategoryPage,
+    DirectorypostPage,
     TabsPage
   ],
   providers: [

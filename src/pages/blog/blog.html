@@ -12,7 +12,10 @@
 
 <ion-content padding>
   <ion-refresher (ionRefresh)="forceReload($event)">
-    <ion-refresher-content refreshingText="{{s.strings.en.loading.refresh}}">
+    <ion-refresher-content
+      pullingText="{{s.strings.en.loading.pulltorefresh}}"
+      refreshingSpinner="{{s.strings.config.spinner}}"
+      refreshingText="{{s.strings.en.loading.refresh}}">
     </ion-refresher-content>
   </ion-refresher>
 
@@ -39,7 +42,7 @@
 
   <ion-infinite-scroll [enabled]="morePagesAvailable" (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
-      loadingSpnner="crescent"
+      loadingSpinner="{{s.strings.config.spinner}}"
       loadingText="{{s.strings.en.loading.more}}">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

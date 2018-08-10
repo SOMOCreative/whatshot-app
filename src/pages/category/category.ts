@@ -1,31 +1,28 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
-import { PostPage } from './../post/post';
+import { DirectorypostPage } from './../directorypost/directorypost';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 import { StringsProvider } from '../../providers/strings/strings';
 import { CacheService } from "ionic-cache";
 
-
 /**
- * Generated class for the BlogPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+ * CategoryPage page.
+  */
 
 @IonicPage()
 @Component({
-  selector: 'page-blog',
-  templateUrl: 'blog.html',
+  selector: 'page-category',
+  templateUrl: 'category.html',
 })
-export class BlogPage {
+export class CategoryPage {
 
+  cat: any;
   posts: any;
   loading: any;
   morePagesAvailable: boolean = true;
-  postType: string = "posts";
+  postType: string = "directory_post";
 
   constructor(
     public navCtrl: NavController,
@@ -34,10 +31,12 @@ export class BlogPage {
     public loadingCtrl: LoadingController,
     public s: StringsProvider,
     public cache: CacheService
-    ) { }
+  ) {
+    this.cat = this.navParams.get('cat');
+  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BlogPage');
+    console.log('ionViewDidLoad CategoryPage');
 
     this.loading = this.loadingCtrl.create({
       content: this.s.strings.en.loading.blog,
@@ -46,28 +45,30 @@ export class BlogPage {
     
     this.loading.present();
     
-    this.getBlogPosts(null);
+    this.getCategoryPosts(null);
   }
 
-  getBlogPosts(refresher) {
-    this.remote.getPosts(this.postType).subscribe(data => {
+  getCategoryPosts(refresher){
+    this.remote.getDirectoryPostsByCategory(this.cat.id, -1).subscribe(data => {
       if(refresher){
         console.log('refreshing');
       }
      
+      console.log(data);
+
       // massage posts.
       for(let post of data) {
         // @TODO: move this to a pipe?
-        post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
+        //post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
       }
 
       // set posts object to returned and massaged data.
       this.posts = data;
       
       // disable lazy load if there are less then 10 posts.
-      if(this.posts.length < 10) {
+      //if(this.posts.length < 10) {
         this.morePagesAvailable = false;
-      }
+      //}
 
       // hide loading overlay.
       this.loading.dismiss();
@@ -85,7 +86,7 @@ export class BlogPage {
     let page = (Math.ceil(this.posts.length/10)) + 1;
     let loading = true;
 
-    this.remote.getPosts(this.postType, page).subscribe(data => {
+    this.remote.getDirectoryPostsByCategory(this.cat.id, page).subscribe(data => {
       
       for(let post of data){
         if(!loading) {
@@ -106,13 +107,13 @@ export class BlogPage {
   }
 
   viewPost(event, post){
-    this.navCtrl.push(PostPage, { post: post });
+    this.navCtrl.push(DirectorypostPage, { post: post });
   }
 
   forceReload(refresher){
-    this.cache.clearGroup(this.postType).then(() => {
-      this.getBlogPosts(refresher);
+    let groupKey = "directory-" + this.cat.id;
+    this.cache.clearGroup(groupKey).then(() => {
+      this.getCategoryPosts(refresher);
     });
   }
-  
 }

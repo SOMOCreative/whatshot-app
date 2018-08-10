@@ -7,6 +7,8 @@ import { EventPage } from '../../pages/event/event';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 import { StringsProvider } from '../../providers/strings/strings';
+import { CacheService } from "ionic-cache";
+
 
 /**
  * EventsPage page.
@@ -22,13 +24,15 @@ export class EventsPage {
   posts: any;
   loading: any;
   morePagesAvailable: boolean = true;
+  postType: string = "event_post";
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public remote: RemoteServiceProvider,
     public loadingCtrl: LoadingController,
-    public s: StringsProvider
+    public s: StringsProvider,
+    public cache: CacheService
     ) { }
 
   ionViewDidLoad() {
@@ -36,18 +40,20 @@ export class EventsPage {
 
     this.loading = this.loadingCtrl.create({
       content: this.s.strings.en.loading.events,
-      spinner: "crescent"
+      spinner: this.s.strings.config.spinner
     });
     
     this.loading.present();
     this.morePagesAvailable = true;
 
-    this.getEventPosts();    
+    this.getEventPosts(null);    
   }
 
-  getEventPosts(){
-    this.remote.getPosts("event_post").subscribe(data => {
-      console.log(data);
+  getEventPosts(refresher){
+    this.remote.getPosts(this.postType).subscribe(data => {
+      if(refresher){
+        console.log('refreshing');
+      }
 
       for(let post of data) {
         // massage posts
@@ -67,6 +73,7 @@ export class EventsPage {
       }
 
       this.loading.dismiss();
+      if(refresher) refresher.complete();
 
     }, err => {
       
@@ -80,7 +87,7 @@ export class EventsPage {
     let page = (Math.ceil(this.posts.length/10)) + 1;
     let loading = true;
 
-    this.remote.getPosts("event_post", page).subscribe(data => {
+    this.remote.getPosts(this.postType, page).subscribe(data => {
       
       for(let post of data){
         if(!loading) {
@@ -102,6 +109,12 @@ export class EventsPage {
 
   viewPost(event, post){
     this.navCtrl.push(EventPage, { post: post });
+  }
+
+  forceReload(refresher){
+    this.cache.clearGroup(this.postType).then(() => {
+      this.getEventPosts(refresher);
+    });
   }
 
 }

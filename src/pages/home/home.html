@@ -1,10 +1,20 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>{{s.strings.en.titles.travel}}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Travel</h2>
-  <p>@todo: Directory list view here.</p>
+<ion-content padding class="card-background-page">
+
+  <ion-card *ngFor="let post of posts" (click)="viewCategory($event, post)">
+    <div *ngIf="post.slug != 'directory'">
+      <div *ngIf="post.total_posts > 0">
+        <img *ngIf="post.acf.image" src="{{post.acf.image.sizes.app}}" />
+        <div class="card-title" [innerHtml]="post.name"></div>
+        <div class="card-subtitle">{{post.total_posts}} Listings</div>
+        <div *ngIf="post.acf" class="image-credit">{{post.acf.image.alt}}</div>
+      </div>
+    </div>
+  </ion-card>
+
 </ion-content>

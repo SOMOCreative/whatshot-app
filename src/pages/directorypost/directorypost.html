@@ -1,0 +1,58 @@
+<!--
+  Generated template for the DirectorypostPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title><span [innerHtml]="post.title.rendered"></span></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-row>
+    <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
+  </ion-row>
+  <ion-row>
+    <div id="contact-info">
+      <button *ngIf="post.acf.phone" ion-button icon-start (click)="clickToCall(post.acf.phone)">
+        <ion-icon name="call"></ion-icon>
+        Phone
+      </button>
+      <button *ngIf="post.acf.business_url" ion-button icon-start (click)="openURL(post.acf.business_url)">
+        <ion-icon name="globe"></ion-icon>
+        Website
+      </button>
+      <button *ngIf="post.acf.business_email" ion-button icon-start (click)="openURL('mailto:' + post.acf.business_email)">
+        <ion-icon name="mail"></ion-icon>
+        Email
+      </button>
+      <button *ngIf="post.acf.map_pins.length > 0" ion-button icon-start (click)="openMap(post)">
+        <ion-icon name="map"></ion-icon>
+        Map
+      </button>
+      <button ion-button icon-start (click)="favourite(post)">
+        <ion-icon name="heart"></ion-icon>
+        Favourite
+      </button>
+    </div>
+  </ion-row>    
+  <ion-row>
+    <h1 [innerHtml]="post.title.rendered"></h1>
+    <p class="meta" [innerHtml]="post.acf.listing_type"></p>
+  </ion-row>
+  <ion-row>
+    <div [innerHtml]="post.content.rendered"></div>
+  </ion-row>
+  <ion-row>
+    <h3>Contact Details:</h3>
+    <p *ngIf="post.acf.phone">Phone: <a href="tel:{{post.acf.phone}}" (click)="clickToCall(post.acf.phone)">{{post.acf.phone}}</a></p>
+    <p *ngIf="post.acf.business_url">Website: <a href="{{post.acf.business_url}}" (click)="openURL(post.acf.business_url)">{{post.acf.business_url}}</a></p>
+    <p *ngIf="post.acf.business_email">Email: <a href="mailto:{{post.acf.business_email}}" (click)="openURL('mailto:' + post.acf.business_email)">{{post.acf.business_email}}</a></p>
+    <p *ngIf="post.acf.map_pins.length > 0">Address: {{post.acf.map_pins[0].pin_address.address}}</p>
+  </ion-row>
+</ion-content>

@@ -17,8 +17,9 @@ export class StringsProvider {
         "more": "Loading some more...",
         "map": "Contacting the Google..",
         "travel": "Curating a list of all the best bits...",
-        "mynz": "Your wish-list is my command-list...",
-        "refresh": "Freshening up..."
+        "mynz": "Loading your Kiwi wish-list...",
+        "refresh": "Freshening up...",
+        "pulltorefresh": "Pull to refresh"
       },
       "titles" : {
         "blog": "News & Info",
@@ -27,6 +28,11 @@ export class StringsProvider {
         "mynz": "My New Zealand",
         "travel": "Directory"
       }
+    },
+    "config" : {
+      "spinner": "crescent",
+      "favourite": "heart",
+      "favouriteAdded": "heart"
     }
   };
 

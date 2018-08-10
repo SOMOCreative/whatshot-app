@@ -15,6 +15,7 @@
 
 <ion-content padding>
   <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
+  <button ion-button small color="primary" icon-start><ion-icon name="{{s.strings.config.favourite}}"></ion-icon></button>
   <h1 [innerHtml]="post.title.rendered"></h1>
   <p>Event Type: {{post.acf.what}}</p>
   <p>Event Date: {{post.start_date}}<span *ngIf="post.end_date"> &ndash; {{post.end_date}}</span></p>
