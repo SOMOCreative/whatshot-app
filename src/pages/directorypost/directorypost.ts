@@ -60,8 +60,8 @@ export class DirectorypostPage {
     this.inAppBrowser.create(url, "_blank");
   }
 
-  openMap(post){
-    this.navCtrl.push(MapPage, { single: true, post: post });
+  openMap(){
+    this.navCtrl.push(MapPage, { post: this.post });
   }
 
   favourite(post){
