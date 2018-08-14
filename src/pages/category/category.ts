@@ -60,6 +60,7 @@ export class CategoryPage {
       for(let post of data) {
         // @TODO: move this to a pipe?
         //post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
+        post.acf.phone = post.acf.business_freephone || post.acf.business_phone;
       }
 
       // set posts object to returned and massaged data.

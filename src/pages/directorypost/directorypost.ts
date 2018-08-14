@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, Slides } from 'ionic-angular';
+
+import { MapPage } from './../../pages/map/map';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 import { StringsProvider } from '../../providers/strings/strings';
 import { CacheService } from "ionic-cache";
+
+import { CallNumber } from '@ionic-native/call-number';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 /**
  * Generated class for the DirectorypostPage page.
@@ -19,6 +25,8 @@ import { CacheService } from "ionic-cache";
 })
 export class DirectorypostPage {
 
+  @ViewChild(Slides) slides: Slides;
+
   post: any;
   loading: any;
 
@@ -28,7 +36,9 @@ export class DirectorypostPage {
     public remote: RemoteServiceProvider,
     public loadingCtrl: LoadingController,
     public s: StringsProvider,
-    public cache: CacheService
+    public cache: CacheService,
+    private callNumber: CallNumber,
+    private inAppBrowser: InAppBrowser
   ) {
     this.post = this.navParams.get('post');
   }
@@ -41,15 +51,17 @@ export class DirectorypostPage {
       spinner: this.s.strings.config.spinner
     });
     
+    if(this.slides) this.slides.startAutoplay();
+
     //this.loading.present();
   }
 
   openURL(url){
-
+    this.inAppBrowser.create(url, "_blank");
   }
 
   openMap(post){
-
+    this.navCtrl.push(MapPage, { single: true, post: post });
   }
 
   favourite(post){
@@ -57,6 +69,8 @@ export class DirectorypostPage {
   }
 
   clickToCall(number){
-    
+    this.callNumber.callNumber(number, true)
+      .then(res => console.log('Launched dialer!', res))
+      .catch(err => console.log('Error launching dialer', err));
   }
 }

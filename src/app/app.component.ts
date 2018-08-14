@@ -18,15 +18,10 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public http: HttpClient, public s: StringsProvider, cache: CacheService) {
     platform.ready().then(() => {
-      //start geolocation
 
       //setup cache
-      cache.setDefaultTTL(60 * 60);
+      cache.setDefaultTTL(60 * 60 * 12);
       cache.setOfflineInvalidate(false);
-
-
-      //check storage for favourits
-      //check storage for package data
 
       statusBar.styleDefault();
       splashScreen.hide();

@@ -21,7 +21,11 @@ import { DirectorypostPage } from '../pages/directorypost/directorypost';
 import { CacheModule } from 'ionic-cache';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CallNumber } from '@ionic-native/call-number';
+import { Geolocation } from '@ionic-native/geolocation';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
+/* providers */
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 import { StringsProvider } from '../providers/strings/strings';
 
@@ -66,7 +70,10 @@ import { StringsProvider } from '../providers/strings/strings';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RemoteServiceProvider,
-    StringsProvider
+    StringsProvider,
+    CallNumber,
+    InAppBrowser,
+    Geolocation
   ]
 })
 export class AppModule {}

@@ -37,7 +37,13 @@ export class RemoteServiceProvider {
   }
 
   getDirectoryPosts(){
+    let url = this.apiUrl + 'directory_post?filter[posts_per_page]=-1';
+    let request = this.http.get(url);
+    let groupKey = "map";
 
+    this.log(url);
+
+    return this.cache.loadFromObservable(url, request, groupKey);
   }
 
   getDirectoryPost(){

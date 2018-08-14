@@ -85,4 +85,6 @@
     <plugin name="cordova-plugin-geolocation" spec="~2.1.0">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="So we can calculate distances to you and show your location on our nifty map." />
     </plugin>
+    <plugin name="mx.ferreyra.callnumber" spec="~0.0.2" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~1.2.1" />
 </widget>

@@ -15,7 +15,7 @@ export class StringsProvider {
         "post": "Getting all the details...",
         "events": "Putting your fingers on the pulse...",
         "more": "Loading some more...",
-        "map": "Contacting the Google..",
+        "map": "Fetching location data..",
         "travel": "Curating a list of all the best bits...",
         "mynz": "Loading your Kiwi wish-list...",
         "refresh": "Freshening up...",
@@ -33,6 +33,80 @@ export class StringsProvider {
       "spinner": "crescent",
       "favourite": "heart",
       "favouriteAdded": "heart"
+    }
+  };
+
+  public Palette = {
+    food: {
+      colour: '#dc443a',
+      tint: '#b7382e'
+    },
+    fashion: {
+      colour: '#034f84',
+      tint: '#00416e'
+    },
+    home: {
+      colour: '#b18f6a',
+      tint: '#937858'
+    },
+    explore: {
+      colour: '#71cc51',
+      tint: '#62a145'
+    },
+    arts: {
+      colour: '#98ddde',
+      tint: '#82b5b7'
+    },
+    user: {
+      colour: '#46515a',
+      tint: '#343e46'
+    },
+    whatson: {
+      colour: '#d82037',
+      tint: '#b3182b'
+    }
+  };
+
+  public Map = {
+    mapStyle: [
+      { "elementType": "geometry", "stylers": [{ "color": "#efefeb" }] },
+      { "elementType": "labels.icon", "stylers": [{ "visibility": "simplified" }] },
+      { "elementType": "labels.text.fill", "stylers": [{ "color": "#3c3c3c" }] },
+      { "elementType": "labels.text.stroke", "stylers": [{ "color": "#f5f5f5" }] },
+      { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [{ "color": "#bdbdbd" }] },
+      { "featureType": "poi", "elementType": "geometry", "stylers": [{ "color": "#eeeeee" }] },
+      { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [{ "color": "#757575" }] },
+      { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "color": "#dce6dc" }] },
+      { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [{ "color": "#9e9e9e" }] },
+      { "featureType": "road", "elementType": "geometry", "stylers": [{ "color": "#ffffff" }] },
+      { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [{ "color": "#757575" }] },
+      { "featureType": "road.highway", "elementType": "geometry", "stylers": [{  "color": "#dadada" }] },
+      { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [{  "color": "#616161" }] },
+      { "featureType": "road.local", "elementType": "labels.text.fill", "stylers": [{  "color": "#9e9e9e" }] },
+      { "featureType": "transit.line", "elementType": "geometry", "stylers": [{  "color": "#e5e5e5" }] },
+      { "featureType": "transit.station", "elementType": "geometry", "stylers": [{  "color": "#eeeeee" }] },
+      { "featureType": "water", "elementType": "geometry", "stylers": [{  "color": "#b4b4c8" }] },
+      { "featureType": "water", "elementType": "labels.text.fill", "stylers": [{  "color": "#9e9e9e" }] }
+    ],
+    myPin: {
+			path: 'M11 11l1.256 5 3.744-10-10 3.75 5 1.25zm1-11c-5.522 0-10 4.395-10 9.815 0 5.505 4.375 9.268 10 14.185 5.625-4.917 10-8.68 10-14.185 0-5.42-4.478-9.815-10-9.815zm0 18c-4.419 0-8-3.582-8-8s3.581-8 8-8 8 3.582 8 8-3.581 8-8 8z',
+			scale: 1.75,
+			fillColor: this.Palette.user.colour,
+			fillOpacity: 0.9,
+			strokeColor: this.Palette.user.tint,
+			strokeWeight: 1,
+			strokeOpacity: 0.9,
+			anchor: {x: 12, y: 24}
+    },
+    directoryPin: {
+      path: 'M1.628,10.176c0,3.77,2.491,6.506,5.232,8.78v0.006c3.725,3.216,3.451,3.244,5.004,5.038	c0,0,1.486-2.199,5.255-5.038c0.012,0,0-0.006,0.012-0.006c2.73-2.273,5.221-5.01,5.221-8.78c0-5.575-4.57-10.083-10.236-10.162 C12.081,0.014,12.047,0,12.012,0H11.99h-0.011c-0.035,0-0.069,0.015-0.115,0.015C6.198,0.094,1.628,4.601,1.628,10.176',
+      scale: 1,
+      fillColor: this.Palette.food.colour,
+      fillOpacity: 0.9,
+      strokeColor: this.Palette.food.tint,
+      strokeWeight: 1,
+      strokeOpacity: 0.9,
+      anchor: {x: 12, y: 24}
     }
   };
 

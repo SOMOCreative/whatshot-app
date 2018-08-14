@@ -14,8 +14,15 @@
 
 
 <ion-content padding>
+  <ion-row *ngIf="post.acf.gallery_images.length > 0">
+    <ion-slides>
+      <ion-slide *ngFor="let image of post.acf.gallery_images">
+        <img src="{{image.sizes.app}}" />
+      </ion-slide>
+    </ion-slides>
+  </ion-row>
   <ion-row>
-    <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
+    <img *ngIf="post.acf.gallery_images == 0 && post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
   </ion-row>
   <ion-row>
     <div id="contact-info">
