@@ -1,1 +1,16 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<!-- ion-menu side="right" [content]="content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>Filter</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <ion-item *ngFor="let post of posts">
+                <span *ngIf="post.total_posts > 0" [innerHtml]="post.name" (click)="filterMap(post.id)"></span>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu -->
+
+<ion-nav [root]="rootPage" #content></ion-nav>

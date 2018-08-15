@@ -17,6 +17,8 @@ import { PostPage } from '../pages/post/post';
 import { EventPage } from '../pages/event/event';
 import { CategoryPage } from '../pages/category/category';
 import { DirectorypostPage } from '../pages/directorypost/directorypost';
+import { DirectorymapPage } from '../pages/directorymap/directorymap';
+import { FiltermodalPage } from '../pages/filtermodal/filtermodal';
 
 import { CacheModule } from 'ionic-cache';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -42,7 +44,9 @@ import { StringsProvider } from '../providers/strings/strings';
     EventPage,
     CategoryPage,
     DirectorypostPage,
-    TabsPage
+    TabsPage,
+    FiltermodalPage,
+    DirectorymapPage
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,9 @@ import { StringsProvider } from '../providers/strings/strings';
     EventPage,
     CategoryPage,
     DirectorypostPage,
-    TabsPage
+    TabsPage,
+    FiltermodalPage,
+    DirectorymapPage
   ],
   providers: [
     StatusBar,

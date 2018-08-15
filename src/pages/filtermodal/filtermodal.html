@@ -1,0 +1,15 @@
+<!--
+  Generated template for the FiltermodalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-content no-padding>
+  <ion-list>
+    <ion-item *ngFor="let post of posts">
+        <ion-label [innerHtml]="post.name"></ion-label>
+        <ion-checkbox [(ngModel)]="this.that.catModel[post.id].visible" (click)="filterMap()"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>

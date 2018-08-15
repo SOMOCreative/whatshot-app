@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, Slides } from 'ionic-angular';
 
-import { MapPage } from './../../pages/map/map';
+import { DirectorymapPage } from './../../pages/directorymap/directorymap';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 import { StringsProvider } from '../../providers/strings/strings';
@@ -61,7 +61,7 @@ export class DirectorypostPage {
   }
 
   openMap(){
-    this.navCtrl.push(MapPage, { post: this.post });
+    this.navCtrl.push(DirectorymapPage, { post: this.post });
   }
 
   favourite(post){

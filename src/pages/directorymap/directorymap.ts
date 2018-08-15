@@ -1,30 +1,30 @@
 /**
- * Generated class for the MapPage page.
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZDZmE0muFJq--wUqk-oh8TbpWlPP7mAw"></script>
+ * Generated class for the DirectorymapPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, LoadingController, PopoverController } from 'ionic-angular';
-import { CacheService } from "ionic-cache";
+import { IonicPage, NavController, NavParams, Platform, LoadingController, ModalController, PopoverController } from 'ionic-angular';
+//import { CacheService } from "ionic-cache";
 
-import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
-
-import { FiltermodalPage } from '../../pages/filtermodal/filtermodal';
+//import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 
 import { StringsProvider } from '../../providers/strings/strings';
 import { Geolocation } from '@ionic-native/geolocation';
 
-import { CallNumber } from '@ionic-native/call-number';
+//import { CallNumber } from '@ionic-native/call-number';
 //import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 declare var google: any;
 
 @IonicPage()
 @Component({
-  selector: 'page-map',
-  templateUrl: 'map.html',
+  selector: 'page-directorymap',
+  templateUrl: 'directorymap.html',
 })
-export class MapPage {
- 
+export class DirectorymapPage {
+
   @ViewChild('map') mapElement: ElementRef;
   private map: any;
   private iw: any;
@@ -36,7 +36,7 @@ export class MapPage {
   private myPin: any;
 
   private posts: any;
-  private categories: any;
+  //private categories: any;
 
   private initialised: boolean = false;
 
@@ -47,13 +47,14 @@ export class MapPage {
     private Platform: Platform,
     private navCtrl: NavController,
     private navParams: NavParams,
-    private cache: CacheService,
+    //private cache: CacheService,
     private s:StringsProvider,
     private geolocation: Geolocation,
-    private remote: RemoteServiceProvider,
+    //private remote: RemoteServiceProvider,
     private loadingCtrl: LoadingController,
-    private callNumber: CallNumber,
-    private popoverController: PopoverController
+    //private callNumber: CallNumber,
+    //private modalController: ModalController,
+    //private popoverController: PopoverController
   ) {
     this.NZ = new google.maps.LatLng(-40.900, 172.600);
     this.myPosition = new google.maps.LatLng();
@@ -61,15 +62,9 @@ export class MapPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MapPage');
+    console.log('ionViewDidLoad DirectoryMapPage');
 
-    // Wait for platform.
-    //this.Platform.ready().then(() => {
-      // Fire up the map.
-      //this.initMap();
-    //});
     this.initMap();
-
   }
 
   ionViewWillEnter() {
@@ -79,8 +74,12 @@ export class MapPage {
       spinner: this.s.strings.config.spinner
     });
 
-    this.loading.present();
-    this.getDirectoryPosts();
+    this.posts = [this.navParams.get('post')];
+    // Add markers.
+    this.addMarkers();
+
+    // Hide loading overlay.
+    this.loading.dismiss();    
   }
 
   initMap() {
@@ -134,48 +133,11 @@ export class MapPage {
     this.myPin.setPosition(this.myPosition);
   }
 
-  getDirectoryPosts() {
-    // Get all directory posts from the remote data source.
-    this.remote.getDirectoryPosts().subscribe(data => {
-      this.posts = data;
-      
-      // Add markers.
-      this.addMarkers();
-
-      // Hide loading overlay.
-      this.loading.dismiss();
-    });
-
-    this.catModel = new Array();
-    this.categories = new Array();
-
-    this.remote.getCategories().subscribe(data => {
-
-      for(let post of data){
-        if(post.total_posts > 0 && post.name !== "DIRECTORY"){
-          this.categories.push(post);
-          this.catModel[post.id] = { id: post.id, visible: true };
-        }
-      }
-      console.log(this.catModel, this.categories);
-    });
-
-  }
-
   addMarkers() {
     console.log(this.posts);
-    let zIndex = 100;
 
     // For each post add marker and create info window HTML.
     for(let post of this.posts) {
-
-      // Does the post have a location?
-      if(post.pin instanceof google.maps.Marker) {
-        // We've already set this up... leave it alone.
-        this.showPin(post);
-
-        continue;
-      }
 
       if(post.acf.map_pins.length > 0){
         let lat = post.acf.map_pins[0].pin_address.lat,
@@ -187,8 +149,7 @@ export class MapPage {
           position: new google.maps.LatLng(lat, lng),
           title: title,
           map: this.map,
-          icon: this.s.Map.directoryPin,
-          zIndex: zIndex++
+          icon: this.s.Map.directoryPin
         });
 
         // Create info window HTML.
@@ -223,49 +184,4 @@ export class MapPage {
       html += "</table>";
     return html;
   }
-
-  clickToCall(number){
-    this.callNumber.callNumber(number, true)
-      .then(res => console.log('Launched dialer!', res))
-      .catch(err => console.log('Error launching dialer', err));
-  }
-
-  showFilterModal(){
-    console.log("filter");
-    let filterPopover = this.popoverController.create(FiltermodalPage, { categories: this.categories, that: this });
-    filterPopover.present();
-  }
-
-  public togglePins(){
-    // Update visible pins from model.
-    for(let post of this.posts){
-
-      // Figure out if pin should be visible base on Category Model.
-      let showpin = this.showPin(post);
-
-      //Should the pin be visible?
-      if(showpin) {
-        //Pin should be visible... Is it already visible?
-        if(post.pin.getMap() === null) post.pin.setMap(this.map);
-      } else {
-        //Pin should be hidden.. Is it already hidden?
-        if(post.pin.getMap() !== null) post.pin.setMap(null);
-      }
-
-    }
-
-  }
-
-  showPin(post){
-    // Figure out if pin should be visible base on Category Model.
-    let showpin = false;
-    for(let cat of this.catModel){
-      if(cat === undefined) continue;
-      if(post.directory.includes(cat.id)) {
-        showpin = cat.visible;
-      }
-    }
-    return showpin;
-  }
-
 }

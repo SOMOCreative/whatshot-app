@@ -1,0 +1,40 @@
+page-directorymap {
+    #map {
+        height:100%;
+    }
+
+    .gm-style {
+        .gm-style-iw {
+            max-width:280px;
+        
+            img {
+                max-width:100%;
+                max-height:220px;
+            }
+
+            .meta-title {
+                margin:-0.75rem 0 1rem;
+            }
+
+            h6 {
+                font-size:1.25rem;
+                margin:0;
+            }
+            
+            p {
+                margin:0;
+            }
+
+            table {
+                td {
+                    vertical-align:top;
+                    padding:1rem 0;
+                    width:72%;
+                }
+                td:first-child {
+                    width:28%;
+                }
+            }
+        }
+    }
+}

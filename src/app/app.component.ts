@@ -2,21 +2,33 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Geolocation } from '@ionic-native/geolocation';
+//import { Geolocation } from '@ionic-native/geolocation';
 import { HttpClient } from '@angular/common/http';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { StringsProvider } from '../providers/strings/strings';
 import { CacheService } from "ionic-cache";
+import { RemoteServiceProvider } from "../providers/remote-service/remote-service";
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+  
   rootPage:any = TabsPage;
+  
+  public posts: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public http: HttpClient, public s: StringsProvider, cache: CacheService) {
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen,
+    http: HttpClient,
+    s: StringsProvider,
+    cache: CacheService,
+    public remote: RemoteServiceProvider
+  ) {
     platform.ready().then(() => {
 
       //setup cache
@@ -26,7 +38,30 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
+      this.remote.getCategories().subscribe(data => {
+        console.log(data);
+        // set posts object to returned and massaged data.
+        this.posts = new Array();
+
+        for(let post of data){
+          if(post.id !== 13) {
+            this.posts.push(post);
+            console.log(post);
+          }
+        }
+        //this.posts = data;
+        // hide loading overlay.
+        //this.loading.dismiss();
+      }, err => {
+        //couldn't get posts, tell the user.
+        console.log(err);
+      });      
+
     });
+  }
+
+  filterMap(id){
+    console.log('filter by id: ' + id, this);
   }
 
 }
