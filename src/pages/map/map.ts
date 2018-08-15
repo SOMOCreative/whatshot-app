@@ -179,12 +179,22 @@ export class MapPage {
             lng = post.acf.map_pins[0].pin_address.lng,
             title = post.title.rendered;
       
+        let pinIcon = this.config.Map.directoryPin;
+        
+        for(let cat of this.categories) {
+          if(post.directory.includes(cat.id)) {
+            pinIcon.fillColor = cat.acf.colour;
+          }
+        }
+
+        console.log(pinIcon);
+
         // Create marker.
         post.pin = new google.maps.Marker({
           position: new google.maps.LatLng(lat, lng),
           title: title,
           map: this.map,
-          icon: this.config.Map.directoryPin,
+          icon: pinIcon,
           zIndex: zIndex++
         });
 
