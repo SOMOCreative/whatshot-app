@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController } from 'ionic-angular';
 
 import { CategoryPage } from './../category/category';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
-import { StringsProvider } from '../../providers/strings/strings';
-import { CacheService } from "ionic-cache";
+import { ConfigProvider } from '../../providers/config/config';
 
 
 @Component({
@@ -21,15 +20,15 @@ export class HomePage {
     public navCtrl: NavController,
     public remote: RemoteServiceProvider,
     public loadingCtrl: LoadingController,
-    public s: StringsProvider
+    public config: ConfigProvider
   ) { }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Travel Page');
 
     this.loading = this.loadingCtrl.create({
-      content: this.s.strings.en.loading.travel,
-      spinner: this.s.strings.config.spinner
+      content: this.config.strings.en.loading.travel,
+      spinner: this.config.strings.config.spinner
     });
     
     this.loading.present();

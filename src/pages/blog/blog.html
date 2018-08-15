@@ -4,7 +4,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{s.strings.en.titles.blog}}</ion-title>
+    <ion-title>{{config.strings.en.titles.blog}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -13,9 +13,9 @@
 <ion-content padding>
   <ion-refresher (ionRefresh)="forceReload($event)">
     <ion-refresher-content
-      pullingText="{{s.strings.en.loading.pulltorefresh}}"
-      refreshingSpinner="{{s.strings.config.spinner}}"
-      refreshingText="{{s.strings.en.loading.refresh}}">
+      pullingText="{{config.strings.en.loading.pulltorefresh}}"
+      refreshingSpinner="{{config.strings.config.spinner}}"
+      refreshingText="{{config.strings.en.loading.refresh}}">
     </ion-refresher-content>
   </ion-refresher>
 
@@ -42,8 +42,8 @@
 
   <ion-infinite-scroll [enabled]="morePagesAvailable" (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
-      loadingSpinner="{{s.strings.config.spinner}}"
-      loadingText="{{s.strings.en.loading.more}}">
+      loadingSpinner="{{config.strings.config.spinner}}"
+      loadingText="{{config.strings.en.loading.more}}">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 

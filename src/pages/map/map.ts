@@ -10,7 +10,7 @@ import { RemoteServiceProvider } from '../../providers/remote-service/remote-ser
 
 import { FiltermodalPage } from '../../pages/filtermodal/filtermodal';
 
-import { StringsProvider } from '../../providers/strings/strings';
+import { ConfigProvider } from '../../providers/config/config';
 import { Geolocation } from '@ionic-native/geolocation';
 
 import { CallNumber } from '@ionic-native/call-number';
@@ -48,7 +48,7 @@ export class MapPage {
     private navCtrl: NavController,
     private navParams: NavParams,
     private cache: CacheService,
-    private s:StringsProvider,
+    private config: ConfigProvider,
     private geolocation: Geolocation,
     private remote: RemoteServiceProvider,
     private loadingCtrl: LoadingController,
@@ -75,8 +75,8 @@ export class MapPage {
   ionViewWillEnter() {
 
     this.loading = this.loadingCtrl.create({
-      content: this.s.strings.en.loading.map,
-      spinner: this.s.strings.config.spinner
+      content: this.config.strings.en.loading.map,
+      spinner: this.config.strings.config.spinner
     });
 
     this.loading.present();
@@ -92,7 +92,7 @@ export class MapPage {
       center: this.NZ,
       zoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      styles: this.s.Map.mapStyle,
+      styles: this.config.Map.mapStyle,
       zoomControl: false,
       mapTypeControl: false,
       scaleControl: false,
@@ -104,7 +104,7 @@ export class MapPage {
 
     // Setup pin for user location.
     this.myPin = new google.maps.Marker({
-      icon: this.s.Map.myPin,
+      icon: this.config.Map.myPin,
       zIndex: 0
     });
 
@@ -135,31 +135,28 @@ export class MapPage {
   }
 
   getDirectoryPosts() {
+    // Build categories and catModel.
+    this.catModel = new Array();
+    this.categories = new Array();
+
     // Get all directory posts from the remote data source.
     this.remote.getDirectoryPosts().subscribe(data => {
       this.posts = data;
       
-      // Add markers.
-      this.addMarkers();
-
-      // Hide loading overlay.
-      this.loading.dismiss();
-    });
-
-    this.catModel = new Array();
-    this.categories = new Array();
-
-    this.remote.getCategories().subscribe(data => {
-
-      for(let post of data){
-        if(post.total_posts > 0 && post.name !== "DIRECTORY"){
-          this.categories.push(post);
-          this.catModel[post.id] = { id: post.id, visible: true };
+      this.remote.getCategories().subscribe(data => {
+  
+        for(let post of data){
+          if(post.total_posts > 0 && post.name !== "DIRECTORY"){
+            this.categories.push(post);
+            this.catModel[post.id] = { id: post.id, visible: true };
+          }
         }
-      }
-      console.log(this.catModel, this.categories);
-    });
+        console.log(this.catModel, this.categories);
 
+        // Add markers.
+        this.addMarkers();
+      });
+    });
   }
 
   addMarkers() {
@@ -187,12 +184,12 @@ export class MapPage {
           position: new google.maps.LatLng(lat, lng),
           title: title,
           map: this.map,
-          icon: this.s.Map.directoryPin,
+          icon: this.config.Map.directoryPin,
           zIndex: zIndex++
         });
 
         // Create info window HTML.
-        post.pin.infoWindowHtml = this.createInfoWindow(post);
+        post.pin.infoWindowHtml = this.config.createInfoWindow(post);
 
         // It's all about context.
         let that = this;
@@ -204,30 +201,13 @@ export class MapPage {
         });
       }
     }
-  }
-
-  createInfoWindow(post){
-    // Build info window HTML.
-    let html = ``;
-      // Main image, title & meta title.
-      html += post.acf.normal_image ? `<img src="${post.acf.normal_image.sizes.app}" />` : ``;
-      html += `<h3>${post.title.rendered}</h3>`;
-      html += post.acf.listing_type ? `<p class="meta-title">${post.acf.listing_type}</p>` : ``;
-      // Contact details.
-      html += "<table>";
-      html += `<tr><td><h6>Address:</h6></td><td><p>${post.acf.map_pins[0].pin_address.address}</p></td></tr>`;
-      html += post.acf.business_freephone ? `<tr><td><h6>Free Phone:</h6></td><td><p>${post.acf.business_freephone}</p></td></tr>` : ``;
-      html += post.acf.business_phone ? `<tr><td><h6>Phone:</h6></td><td><p>${post.acf.business_phone}</p></td></tr>` : ``;
-      html += post.acf.business_url ? `<tr><td><h6>Website:</h6></td><td><p>${post.acf.business_url}</p></td></tr>` : ``;
-      html += post.acf.business_email ? `<tr><td><h6>Email:</h6></td><td><p>${post.acf.business_email}</p></td></tr>` : ``;
-      html += "</table>";
-    return html;
+    
+    // Hide loading overlay.
+    this.loading.dismiss();
   }
 
   clickToCall(number){
-    this.callNumber.callNumber(number, true)
-      .then(res => console.log('Launched dialer!', res))
-      .catch(err => console.log('Error launching dialer', err));
+    this.config.clickToCall(number);
   }
 
   showFilterModal(){

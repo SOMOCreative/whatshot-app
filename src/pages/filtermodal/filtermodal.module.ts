@@ -10,7 +10,4 @@ import { FiltermodalPage } from './filtermodal';
     IonicPageModule.forChild(FiltermodalPage),
   ],
 })
-export class FiltermodalPageModule {
-
-  
-}
+export class FiltermodalPageModule { }

@@ -5,12 +5,12 @@
  * Ionic pages and navigation.
  */
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, LoadingController, ModalController, PopoverController } from 'ionic-angular';
+import { IonicPage, /*NavController,*/ NavParams, /*Platform,*/ LoadingController } from 'ionic-angular';
 //import { CacheService } from "ionic-cache";
 
 //import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
 
-import { StringsProvider } from '../../providers/strings/strings';
+import { ConfigProvider } from '../../providers/config/config';
 import { Geolocation } from '@ionic-native/geolocation';
 
 //import { CallNumber } from '@ionic-native/call-number';
@@ -44,11 +44,11 @@ export class DirectorymapPage {
   public  single:   boolean = false;
 
   constructor(
-    private Platform: Platform,
-    private navCtrl: NavController,
+    //private Platform: Platform,
+    //private navCtrl: NavController,
     private navParams: NavParams,
     //private cache: CacheService,
-    private s:StringsProvider,
+    private config: ConfigProvider,
     private geolocation: Geolocation,
     //private remote: RemoteServiceProvider,
     private loadingCtrl: LoadingController,
@@ -70,8 +70,8 @@ export class DirectorymapPage {
   ionViewWillEnter() {
 
     this.loading = this.loadingCtrl.create({
-      content: this.s.strings.en.loading.map,
-      spinner: this.s.strings.config.spinner
+      content: this.config.strings.en.loading.map,
+      spinner: this.config.strings.config.spinner
     });
 
     this.posts = [this.navParams.get('post')];
@@ -91,7 +91,7 @@ export class DirectorymapPage {
       center: this.NZ,
       zoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      styles: this.s.Map.mapStyle,
+      styles: this.config.Map.mapStyle,
       zoomControl: false,
       mapTypeControl: false,
       scaleControl: false,
@@ -103,7 +103,7 @@ export class DirectorymapPage {
 
     // Setup pin for user location.
     this.myPin = new google.maps.Marker({
-      icon: this.s.Map.myPin,
+      icon: this.config.Map.myPin,
       zIndex: 0
     });
 
@@ -149,11 +149,11 @@ export class DirectorymapPage {
           position: new google.maps.LatLng(lat, lng),
           title: title,
           map: this.map,
-          icon: this.s.Map.directoryPin
+          icon: this.config.Map.directoryPin
         });
 
         // Create info window HTML.
-        post.pin.infoWindowHtml = this.createInfoWindow(post);
+        post.pin.infoWindowHtml = this.config.createInfoWindow(post);
 
         // It's all about context.
         let that = this;
@@ -165,23 +165,5 @@ export class DirectorymapPage {
         });
       }
     }
-  }
-
-  createInfoWindow(post){
-    // Build info window HTML.
-    let html = ``;
-      // Main image, title & meta title.
-      html += post.acf.normal_image ? `<img src="${post.acf.normal_image.sizes.app}" />` : ``;
-      html += `<h3>${post.title.rendered}</h3>`;
-      html += post.acf.listing_type ? `<p class="meta-title">${post.acf.listing_type}</p>` : ``;
-      // Contact details.
-      html += "<table>";
-      html += `<tr><td><h6>Address:</h6></td><td><p>${post.acf.map_pins[0].pin_address.address}</p></td></tr>`;
-      html += post.acf.business_freephone ? `<tr><td><h6>Free Phone:</h6></td><td><p>${post.acf.business_freephone}</p></td></tr>` : ``;
-      html += post.acf.business_phone ? `<tr><td><h6>Phone:</h6></td><td><p>${post.acf.business_phone}</p></td></tr>` : ``;
-      html += post.acf.business_url ? `<tr><td><h6>Website:</h6></td><td><p>${post.acf.business_url}</p></td></tr>` : ``;
-      html += post.acf.business_email ? `<tr><td><h6>Email:</h6></td><td><p>${post.acf.business_email}</p></td></tr>` : ``;
-      html += "</table>";
-    return html;
   }
 }

@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
+import { CallNumber } from '@ionic-native/call-number';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 /*
-  StringsProvider provider.
+  Configuration and Utilities provider.
 
-  Provides strings for interfaces.
+  Provides strings and utility functions.
+
 */
 @Injectable()
-export class StringsProvider {
+export class ConfigProvider {
+
+  constructor(
+    private callNumber: CallNumber,
+    private inAppBrowser: InAppBrowser
+  ) {
+    console.log('Hello ConfigProvider Provider');
+  }
 
   public strings = {
     "en" : {
@@ -110,8 +120,46 @@ export class StringsProvider {
     }
   };
 
-  constructor() {
-    console.log('Hello StringsProvider Provider');
+  
+  
+  /*
+
+    Utility Functions
+
+  */
+
+  public createInfoWindow(post): string {
+    // Build info window HTML.
+    let html = ``;
+      // Main image, title & meta title.
+      html += post.acf.normal_image ? `<img src="${post.acf.normal_image.sizes.app}" />` : ``;
+      html += `<h3>${post.title.rendered}</h3>`;
+      html += post.acf.listing_type ? `<p class="meta-title">${post.acf.listing_type}</p>` : ``;
+      // Contact details.
+      html += "<table>";
+      html += `<tr><td><h6>Address:</h6></td><td><p>${post.acf.map_pins[0].pin_address.address}</p></td></tr>`;
+      html += post.acf.business_freephone ? `<tr><td><h6>Free Phone:</h6></td><td><p>${post.acf.business_freephone}</p></td></tr>` : ``;
+      html += post.acf.business_phone ? `<tr><td><h6>Phone:</h6></td><td><p>${post.acf.business_phone}</p></td></tr>` : ``;
+      html += post.acf.business_url ? `<tr><td><h6>Website:</h6></td><td><p>${post.acf.business_url}</p></td></tr>` : ``;
+      html += post.acf.business_email ? `<tr><td><h6>Email:</h6></td><td><p>${post.acf.business_email}</p></td></tr>` : ``;
+      html += "</table>";
+    return html;
   }
 
+  public clickToCall(number){
+    console.log("-- CLICK TO CALL: ", number)
+    this.callNumber.callNumber(number, true)
+      .then(res => console.log('Launched dialer!', res))
+      .catch(err => console.log('Error launching dialer', err));
+  }
+
+  public toggleFavourite(post) {
+    // @TODO: Setup local storage, toggle (add/remove) favourites based on IDs. To be displayed in My NZ tab.
+    console.log("-- TOGGLE FAVOURITE: ", post);
+  }
+
+  public openURL(url){
+    console.log("-- OPEN URL: ", url);
+    this.inAppBrowser.create(url, "_blank");
+  }  
 }

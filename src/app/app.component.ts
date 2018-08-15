@@ -3,10 +3,10 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 //import { Geolocation } from '@ionic-native/geolocation';
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { StringsProvider } from '../providers/strings/strings';
+//import { ConfigProvider } from '../providers/config/config';
 import { CacheService } from "ionic-cache";
 import { RemoteServiceProvider } from "../providers/remote-service/remote-service";
 
@@ -24,8 +24,8 @@ export class MyApp {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    http: HttpClient,
-    s: StringsProvider,
+    //http: HttpClient,
+    //config: ConfigProvider,
     cache: CacheService,
     public remote: RemoteServiceProvider
   ) {

@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { EventPage } from '../../pages/event/event';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
-import { StringsProvider } from '../../providers/strings/strings';
+import { ConfigProvider } from '../../providers/config/config';
 import { CacheService } from "ionic-cache";
 
 
@@ -31,7 +31,7 @@ export class EventsPage {
     public navParams: NavParams,
     public remote: RemoteServiceProvider,
     public loadingCtrl: LoadingController,
-    public s: StringsProvider,
+    public config: ConfigProvider,
     public cache: CacheService
     ) { }
 
@@ -39,8 +39,8 @@ export class EventsPage {
     console.log('ionViewDidLoad EventsPage');
 
     this.loading = this.loadingCtrl.create({
-      content: this.s.strings.en.loading.events,
-      spinner: this.s.strings.config.spinner
+      content: this.config.strings.en.loading.events,
+      spinner: this.config.strings.config.spinner
     });
     
     this.loading.present();

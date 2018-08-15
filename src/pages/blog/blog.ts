@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { PostPage } from './../post/post';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
-import { StringsProvider } from '../../providers/strings/strings';
+import { ConfigProvider } from '../../providers/config/config';
 import { CacheService } from "ionic-cache";
 
 
@@ -32,7 +32,7 @@ export class BlogPage {
     public navParams: NavParams,
     public remote: RemoteServiceProvider,
     public loadingCtrl: LoadingController,
-    public s: StringsProvider,
+    public config: ConfigProvider,
     public cache: CacheService
     ) { }
 
@@ -40,8 +40,8 @@ export class BlogPage {
     console.log('ionViewDidLoad BlogPage');
 
     this.loading = this.loadingCtrl.create({
-      content: this.s.strings.en.loading.blog,
-      spinner: this.s.strings.config.spinner
+      content: this.config.strings.en.loading.blog,
+      spinner: this.config.strings.config.spinner
     });
     
     this.loading.present();

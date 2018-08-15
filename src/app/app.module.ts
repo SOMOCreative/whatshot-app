@@ -29,7 +29,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 /* providers */
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
-import { StringsProvider } from '../providers/strings/strings';
+import { ConfigProvider } from '../providers/config/config';
 
 @NgModule({
   declarations: [
@@ -76,7 +76,7 @@ import { StringsProvider } from '../providers/strings/strings';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RemoteServiceProvider,
-    StringsProvider,
+    ConfigProvider,
     CallNumber,
     InAppBrowser,
     Geolocation

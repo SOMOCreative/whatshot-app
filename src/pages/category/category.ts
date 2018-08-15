@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { DirectorypostPage } from './../directorypost/directorypost';
 
 import { RemoteServiceProvider } from '../../providers/remote-service/remote-service';
-import { StringsProvider } from '../../providers/strings/strings';
+import { ConfigProvider } from '../../providers/config/config';
 import { CacheService } from "ionic-cache";
 
 /**
@@ -29,7 +29,7 @@ export class CategoryPage {
     public navParams: NavParams,
     public remote: RemoteServiceProvider,
     public loadingCtrl: LoadingController,
-    public s: StringsProvider,
+    public config: ConfigProvider,
     public cache: CacheService
   ) {
     this.cat = this.navParams.get('cat');
@@ -39,8 +39,8 @@ export class CategoryPage {
     console.log('ionViewDidLoad CategoryPage');
 
     this.loading = this.loadingCtrl.create({
-      content: this.s.strings.en.loading.blog,
-      spinner: this.s.strings.config.spinner
+      content: this.config.strings.en.loading.blog,
+      spinner: this.config.strings.config.spinner
     });
     
     this.loading.present();
