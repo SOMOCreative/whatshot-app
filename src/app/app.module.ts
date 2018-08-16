@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 
@@ -30,6 +31,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 /* providers */
 import { RemoteServiceProvider } from '../providers/remote-service/remote-service';
 import { ConfigProvider } from '../providers/config/config';
+import { FavouriteProvider } from '../providers/favourite/favourite';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { ConfigProvider } from '../providers/config/config';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    CacheModule.forRoot({ keyPrefix: 'whnz-app-cache' })
+    CacheModule.forRoot({ keyPrefix: 'whnz-app-cache' }),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -77,6 +80,7 @@ import { ConfigProvider } from '../providers/config/config';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RemoteServiceProvider,
     ConfigProvider,
+    FavouriteProvider,
     CallNumber,
     InAppBrowser,
     Geolocation

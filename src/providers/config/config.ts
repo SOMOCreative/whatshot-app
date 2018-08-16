@@ -133,13 +133,17 @@ export class ConfigProvider {
       .catch(err => console.log('Error launching dialer', err));
   }
 
-  public toggleFavourite(post) {
-    // @TODO: Setup local storage, toggle (add/remove) favourites based on IDs. To be displayed in My NZ tab.
-    console.log("-- TOGGLE FAVOURITE: ", post);
-  }
-
   public openURL(url){
     console.log("-- OPEN URL: ", url);
     this.inAppBrowser.create(url, "_blank");
-  }  
+  }
+
+  public excerpt(str, maxLength, append){
+    if (str.length <= maxLength) return str;
+    return str.substr(0, str.lastIndexOf(" ", maxLength)) + append;
+  }
+
+  public stripTags(str){
+    return str.replace(/(<([^>]+)>)/ig,"");
+  }
 }

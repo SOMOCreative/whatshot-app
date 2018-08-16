@@ -39,8 +39,6 @@ export class HomePage {
   getCategories(){
     this.remote.getCategories().subscribe(data => {
      
-      console.log(data);
-
       // massage posts.
       for(let post of data) {
       }
@@ -61,7 +59,6 @@ export class HomePage {
 
   viewCategory(event, category){
     this.navCtrl.push(CategoryPage, { cat: category });
-    console.log(category);
   }
 
 }

@@ -39,14 +39,12 @@ export class MyApp {
       splashScreen.hide();
 
       this.remote.getCategories().subscribe(data => {
-        console.log(data);
         // set posts object to returned and massaged data.
         this.posts = new Array();
 
         for(let post of data){
           if(post.id !== 13) {
             this.posts.push(post);
-            console.log(post);
           }
         }
         //this.posts = data;
@@ -59,9 +57,4 @@ export class MyApp {
 
     });
   }
-
-  filterMap(id){
-    console.log('filter by id: ' + id, this);
-  }
-
 }

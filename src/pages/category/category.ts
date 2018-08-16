@@ -61,6 +61,7 @@ export class CategoryPage {
         // @TODO: move this to a pipe?
         //post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
         post.acf.phone = post.acf.business_freephone || post.acf.business_phone;
+        post.excerpt = this.config.excerpt(this.config.stripTags(post.content.rendered), 200, "...");
       }
 
       // set posts object to returned and massaged data.
@@ -107,7 +108,7 @@ export class CategoryPage {
     });
   }
 
-  viewPost(event, post){
+  viewPost(post){
     this.navCtrl.push(DirectorypostPage, { post: post });
   }
 

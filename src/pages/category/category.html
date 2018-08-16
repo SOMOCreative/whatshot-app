@@ -23,20 +23,29 @@
       </ion-refresher-content>
     </ion-refresher>
   
-    <ion-card *ngFor="let post of posts">
+    <ion-card *ngFor="let post of posts" (click)="viewPost(post)">
       <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
       <ion-card-content>
-        <ion-card-title>
-          <div [innerHtml]="post.title.rendered"></div>
-        </ion-card-title>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-card-title>
+                <div [innerHtml]="post.title.rendered"></div>
+              </ion-card-title>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-10>
+              <p>{{post.excerpt}}</p>
+            </ion-col>
+            <ion-col align-self-end>
+              <ion-icon class="readmore" name="arrow-round-forward" float-right></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+          </ion-row>
+        </ion-grid>
       </ion-card-content>
-      <ion-row no-padding>
-
-        <ion-col text-right>
-          <button ion-button small color="primary" (click)="viewPost($event, post)" icon-start>Read More</button>
-        </ion-col>
-  
-      </ion-row>
     </ion-card>
   
     <ion-infinite-scroll [enabled]="morePagesAvailable" (ionInfinite)="doInfinite($event)">
