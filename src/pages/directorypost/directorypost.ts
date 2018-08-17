@@ -35,14 +35,15 @@ export class DirectorypostPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DirectorypostPage');
+  }
 
+  ionViewWillEnter(){
     if(this.slides) this.slides.startAutoplay();
 
     this.favourite.isFavourite(this.post).then(isFav => {
       this.isFavourite = isFav;
       console.log('is favourite? ', isFav);
     });
-
   }
 
   openURL(url) {
@@ -57,10 +58,6 @@ export class DirectorypostPage {
     this.config.clickToCall(number);
   }
 
-  toggleFavourite() {
-    //this.favourite.toggleFavourite(this.post);
-  }
-
   addFavourite() {
     this.favourite.addFavourite(this.post).then(() => {
       this.isFavourite = true;
@@ -71,11 +68,6 @@ export class DirectorypostPage {
     this.favourite.removeFavourite(this.post).then(() => {
       this.isFavourite = false;
     });
-  }
-
-  kill(){
-    console.log('kill favs');
-    this.favourite.kill();
   }
 
 }

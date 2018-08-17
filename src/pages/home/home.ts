@@ -40,12 +40,18 @@ export class HomePage {
     this.remote.getCategories().subscribe(data => {
      
       // massage posts.
+      // Remove DIRECTORY category.
+      data.splice(data.findIndex(item => {return item.name === "DIRECTORY"}), 1);
       for(let post of data) {
+        // Remove any category with no posts.
+        if(post.total_posts === 0){
+          data.splice(data.findIndex(item => {return item.id === post.id}), 1);
+        }
       }
 
       // set posts object to returned and massaged data.
       this.posts = data;
-      
+
       // hide loading overlay.
       this.loading.dismiss();
       
@@ -57,7 +63,7 @@ export class HomePage {
     });
   }
 
-  viewCategory(event, category){
+  viewCategory(category){
     this.navCtrl.push(CategoryPage, { cat: category });
   }
 

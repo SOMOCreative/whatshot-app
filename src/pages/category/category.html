@@ -30,19 +30,17 @@
           <ion-row>
             <ion-col>
               <ion-card-title>
-                <div [innerHtml]="post.title.rendered"></div>
+                <h1 [innerHtml]="post.title.rendered"></h1>
               </ion-card-title>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col col-10>
-              <p>{{post.excerpt}}</p>
+              <p [innerHtml]="post.excerpt"></p>
             </ion-col>
             <ion-col align-self-end>
               <ion-icon class="readmore" name="arrow-round-forward" float-right></ion-icon>
             </ion-col>
-          </ion-row>
-          <ion-row>
           </ion-row>
         </ion-grid>
       </ion-card-content>

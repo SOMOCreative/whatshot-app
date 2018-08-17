@@ -6,15 +6,13 @@
 
 <ion-content padding class="card-background-page">
 
-  <ion-card *ngFor="let post of posts" (click)="viewCategory($event, post)">
-    <div *ngIf="post.slug != 'directory'">
-      <div *ngIf="post.total_posts > 0">
-        <img *ngIf="post.acf.image" src="{{post.acf.image.sizes.app}}" />
-        <div class="card-title" [innerHtml]="post.name"></div>
-        <div class="card-subtitle">{{post.total_posts}} Listings</div>
-        <div *ngIf="post.acf" class="image-credit">{{post.acf.image.alt}}</div>
-      </div>
+  <ion-card *ngFor="let post of posts" (click)="viewCategory(post)" [class.hidden]="post.total_posts === 0">
+    <img *ngIf="post.acf.image" src="{{post.acf.image.sizes.app}}" />
+    <div class="card-content">
+      <div class="card-title" [innerHtml]="post.name"></div>
+      <div class="card-subtitle">{{post.total_posts}} Listings</div>
     </div>
+    <div *ngIf="post.acf" class="image-credit">{{post.acf.image.alt}}</div>
   </ion-card>
 
 </ion-content>

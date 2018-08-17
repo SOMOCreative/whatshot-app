@@ -1,8 +1,8 @@
 <!--
-  Generated template for the EventPage page.
+  Event Page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+  Template for the detail-view of an Event Post.
+
 -->
 <ion-header>
 
@@ -14,10 +14,67 @@
 
 
 <ion-content padding>
-  <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
-  <button ion-button small color="primary" icon-start><ion-icon name="{{config.strings.config.favourite}}"></ion-icon></button>
-  <h1 [innerHtml]="post.title.rendered"></h1>
-  <p>Event Type: {{post.acf.what}}</p>
-  <p>Event Date: {{post.start_date}}<span *ngIf="post.end_date"> &ndash; {{post.end_date}}</span></p>
-  <div [innerHtml]="post.content.rendered"></div>
+  <ion-grid>
+  
+    <!-- HERO IMAGE -->
+    <ion-row>
+      <ion-col>
+          <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
+      </ion-col>
+    </ion-row>
+
+    <!-- TOOLBAR BUTTONS -->
+    <ion-row class="toolbar-buttons" justify-content-center>
+      <ion-col>
+        <button *ngIf="!isFavourite" (click)="addFavourite()" ion-button icon-only clear>
+          <ion-icon name="heart-outline"></ion-icon>
+        </button>
+        <button *ngIf="isFavourite" (click)="removeFavourite()" ion-button icon-only clear>
+          <ion-icon name="heart"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <!-- CONTENT -->
+    <ion-row class="content">
+      <ion-col>
+        <h1 [innerHtml]="post.title.rendered"></h1>
+        <p class="meta-title" [innerHtml]="post.acf.what"></p>
+        <div [innerHtml]="post.content.rendered"></div>
+      </ion-col>
+    </ion-row>
+
+    <!-- EVENT INFORMATION -->
+    <ion-row class="information">
+      <ion-col>
+        <h6>Event Information</h6>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="post.start_date" align-items-center>
+      <ion-col col-2>
+        <p class="info-label">Starts</p>
+      </ion-col>
+      <ion-col>
+        <p class="info-data">{{post.start_date}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="post.end_date" align-items-center>
+      <ion-col col-2>
+        <p class="info-label">Ends</p>
+      </ion-col>
+      <ion-col>
+        <p class="info-data">{{post.end_date}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="post.acf.where" align-items-center>
+      <ion-col col-2>
+        <p class="info-label">Where</p>
+      </ion-col>
+      <ion-col>
+        <p class="info-data">{{post.acf.where}}</p>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
 </ion-content>

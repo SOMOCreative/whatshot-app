@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { ConfigProvider } from '../../providers/config/config';
 import { FavouriteProvider } from '../../providers/favourite/favourite';
 
+import { DirectorypostPage } from './../directorypost/directorypost';
+import { EventPage } from './../event/event';
 
 /**
  * Generated class for the MynzPage page.
@@ -82,6 +84,19 @@ export class MynzPage {
       ]
     });
     alert.present();
+  }
+
+  viewPost(post){
+    switch(post.type){
+      case "directory_post":
+        this.navCtrl.push(DirectorypostPage, { post: post });
+      break;
+      case "event_post":
+        this.navCtrl.push(EventPage, { post: post });
+      break;
+      default:
+      console.log('Type not handled.', post);
+    }
   }
 
 }

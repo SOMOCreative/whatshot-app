@@ -57,8 +57,7 @@ export class BlogPage {
      
       // massage posts.
       for(let post of data) {
-        // @TODO: move this to a pipe?
-        post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
+        this.massagePost(post);
       }
 
       // set posts object to returned and massaged data.
@@ -91,7 +90,8 @@ export class BlogPage {
         if(!loading) {
           infiniteScroll.complete();
         }
-
+        
+        this.massagePost(post);
         this.posts.push(post);
         loading = false;
       }
@@ -105,7 +105,7 @@ export class BlogPage {
     });
   }
 
-  viewPost(event, post){
+  viewPost(post){
     this.navCtrl.push(PostPage, { post: post });
   }
 
@@ -115,4 +115,9 @@ export class BlogPage {
     });
   }
   
+  massagePost(post){
+    //post.excerpt.rendered = post.excerpt.rendered.replace(/<a.*readmore.*>.*<\/a>/ig, "");
+    post.excerpt = this.config.excerpt(this.config.stripTags(post.content.rendered), 200, "...");
+  }
+
 }

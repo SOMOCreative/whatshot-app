@@ -17,22 +17,32 @@
 
 
 <ion-content padding>
+  
   <div *ngIf="!haveFavourites">
-    <h4>You haven't added any favourties yet.</h4><p>Wherever you see a <ion-icon name="heart"></ion-icon> button tap it to add the event or listing to you kiwi bucket list!</p>
+    <h4>You haven't added any favourties yet.</h4><p>Wherever you see a <ion-icon name="heart"></ion-icon> button tap it to add the event or listing to your kiwi bucket list!</p>
   </div>
-  <ion-card *ngFor="let post of posts">
+
+  <ion-card *ngFor="let post of posts" (click)="viewPost(post)">
     <img *ngIf="post.acf.normal_image" src="{{post.acf.normal_image.sizes.app}}" />
     <ion-card-content>
-      <ion-card-title>
-        <div [innerHtml]="post.title.rendered"></div>
-      </ion-card-title>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-card-title>
+              <h1 [innerHtml]="post.title.rendered"></h1>
+            </ion-card-title>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-10>
+            <p [innerHtml]="post.excerpt"></p>
+          </ion-col>
+          <ion-col align-self-end>
+            <ion-icon class="readmore" name="arrow-round-forward" float-right></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
-    <ion-row no-padding>
-
-      <ion-col text-right>
-        <button ion-button small color="primary" (click)="viewPost($event, post)" icon-start>Read More</button>
-      </ion-col>
-
-    </ion-row>
   </ion-card>
+
 </ion-content>

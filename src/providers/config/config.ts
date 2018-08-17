@@ -33,7 +33,7 @@ export class ConfigProvider {
       },
       "titles" : {
         "blog": "News & Info",
-        "events": "Events",
+        "events": "Upcoming Events",
         "map": "Map",
         "mynz": "My New Zealand",
         "travel": "Directory"

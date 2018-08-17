@@ -51,7 +51,7 @@ export class FavouriteProvider {
       // Do we have any favourites? We should if this is being called!
       if(result) {
         // Get the index of the favourite to be removed.
-        var index = result.findIndex(item => {return item.id === post.id});
+        let index = result.findIndex(item => {return item.id === post.id});
         // Cut it out!
         result.splice(index, 1);
         // Store the newly adjusted favourites array.

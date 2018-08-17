@@ -1,8 +1,8 @@
 <!--
-  Generated template for the DirectorypostPage page.
+  Directorypost Page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+  Template for the detail-view of a Directory Post.
+
 -->
 <ion-header>
 
@@ -27,46 +27,88 @@
         </ion-slides>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="post.acf.gallery_images.length === 0 && post.acf.normal_image">
+    <ion-row *ngIf="!post.acf.gallery_images && post.acf.normal_image">
       <img src="{{post.acf.normal_image.sizes.app}}" />
     </ion-row>
     
     <!-- TOOLBAR BUTTONS -->
-    <ion-row>
-      <ion-toolbar>
-        <ion-buttons>
-          <button *ngIf="post.acf.phone" ion-button icon-only (click)="clickToCall(post.acf.phone)">
-            <ion-icon name="call"></ion-icon>
-          </button>
-          <button *ngIf="post.acf.business_url" ion-button icon-only (click)="openURL(post.acf.business_url)">
-            <ion-icon name="globe"></ion-icon>
-          </button>
-          <button *ngIf="post.acf.business_email" ion-button icon-only (click)="openURL('mailto:' + post.acf.business_email)">
-            <ion-icon name="mail"></ion-icon>
-          </button>
-          <button *ngIf="post.acf.map_pins.length > 0" ion-button icon-only (click)="openMap(post)">
-            <ion-icon name="map"></ion-icon>
-          </button>
-          <button ion-button icon-only (click)="addFavourite()" *ngIf="!isFavourite"><ion-icon name="heart-outline"></ion-icon></button>
-          <button ion-button icon-only (click)="removeFavourite()" *ngIf="isFavourite"><ion-icon name="heart"></ion-icon></button>
-        </ion-buttons>
-      </ion-toolbar>
+    <ion-row class="toolbar-buttons" justify-content-center>
+      <ion-col *ngIf="post.acf.phone">
+        <button (click)="clickToCall(post.acf.phone)" ion-button icon-only clear>
+          <ion-icon name="call"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="post.acf.business_url">
+        <button (click)="openURL(post.acf.business_url)" ion-button icon-only clear>
+          <ion-icon name="globe"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="post.acf.business_email">
+        <button (click)="openURL('mailto:' + post.acf.business_email)" ion-button icon-only clear>
+          <ion-icon name="mail"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col *ngIf="post.acf.map_pins.length > 0">
+        <button (click)="openMap(post)" ion-button icon-only clear>
+          <ion-icon name="map"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button *ngIf="!isFavourite" (click)="addFavourite()" ion-button icon-only clear>
+          <ion-icon name="heart-outline"></ion-icon>
+        </button>
+        <button *ngIf="isFavourite" (click)="removeFavourite()" ion-button icon-only clear>
+          <ion-icon name="heart"></ion-icon>
+        </button>
+      </ion-col>
     </ion-row>
     
     <!-- CONTENT -->
-    <ion-row>
-      <h1 [innerHtml]="post.title.rendered"></h1>
-      <p class="meta" [innerHtml]="post.acf.listing_type"></p>
+    <ion-row class="content">
+      <ion-col>
+        <h1 [innerHtml]="post.title.rendered"></h1>
+        <p class="meta-title" [innerHtml]="post.acf.listing_type"></p>
+        <div [innerHtml]="post.content.rendered"></div>
+      </ion-col>
     </ion-row>
-    <ion-row>
-      <div [innerHtml]="post.content.rendered"></div>
+    
+    <!-- BUSINESS INFORMATION -->
+    <ion-row class="information">
+      <ion-col>
+        <h6>Business Information</h6>
+      </ion-col>
     </ion-row>
-    <ion-row>
-      <h3>Contact Details:</h3>
-      <p *ngIf="post.acf.phone">Phone: <a href="tel:{{post.acf.phone}}" (click)="clickToCall(post.acf.phone)">{{post.acf.phone}}</a></p>
-      <p *ngIf="post.acf.business_url">Website: <a href="{{post.acf.business_url}}" (click)="openURL(post.acf.business_url)">{{post.acf.business_url}}</a></p>
-      <p *ngIf="post.acf.business_email">Email: <a href="mailto:{{post.acf.business_email}}" (click)="openURL('mailto:' + post.acf.business_email)">{{post.acf.business_email}}</a></p>
-      <p *ngIf="post.acf.map_pins.length > 0">Address: {{post.acf.map_pins[0].pin_address.address}}</p>
+    <ion-row *ngIf="post.acf.phone" align-items-center>
+      <ion-col col-2>
+        <p class="info-label">Phone</p>
+      </ion-col>
+      <ion-col>
+        <p class="info-data"><a href="tel:{{post.acf.phone}}" (click)="clickToCall(post.acf.phone)">{{post.acf.phone}}</a></p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="post.acf.business_url" align-items-center>
+      <ion-col col-2>
+        <p class="info-label">Website</p>
+      </ion-col>
+      <ion-col>
+        <p class="info-data"><a href="{{post.acf.business_url}}" (click)="openURL(post.acf.business_url)">{{post.acf.business_url}}</a></p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="post.acf.business_email" align-items-center>
+      <ion-col col-2>
+        <p class="info-label">Email</p>
+      </ion-col>
+      <ion-col>
+        <p class="info-data"><a href="mailto:{{post.acf.business_email}}" (click)="openURL('mailto:' + post.acf.business_email)">{{post.acf.business_email}}</a></p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="post.acf.map_pins.length > 0" align-items-center>
+      <ion-col col-2>
+        <p class="info-label">Address</p>
+      </ion-col>
+      <ion-col>
+        <p class="info-data">{{post.acf.map_pins[0].pin_address.address}}</p>
+      </ion-col>
     </ion-row>
   
   </ion-grid>

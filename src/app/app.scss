@@ -19,8 +19,57 @@
 
 .meta-title {
     text-transform:uppercase;
+    margin-bottom:0;
 }
 
 .readmore {
-    zoom:2.0;
+    zoom:2.3;
+    color: $card-md-text-color;
+}
+
+.info-label {
+    text-transform:uppercase;
+    font-size:0.9rem;
+}
+
+.info-label, .info-data {
+    margin:0.75rem 0;
+}
+
+img {
+    display:block;
+}
+
+//.swiper-slide {}
+
+.grid {
+    padding:0;
+}
+
+.col {
+    padding:0;
+}
+
+.toolbar-buttons {
+    margin-bottom:16px;
+
+    .col {
+        text-align:center;
+        border-width:1px 0 1px 1px;
+        border-color:#ddd;
+        border-style:solid;
+
+        &:last-child {
+            border-width:1px;
+        }
+    }
+}
+
+.information {
+    margin-top:16px;
+}
+
+.card {
+    margin:0 0 24px 0;
+    width:100%;
 }

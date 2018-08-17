@@ -33,7 +33,7 @@ export class EventsPage {
     public loadingCtrl: LoadingController,
     public config: ConfigProvider,
     public cache: CacheService
-    ) { }
+  ) { }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventsPage');
@@ -57,13 +57,7 @@ export class EventsPage {
 
       for(let post of data) {
         // massage posts
-        if(post.acf.repeater_dates && post.acf.repeater_dates[0].start_date) {
-          post.start_date = moment(post.acf.repeater_dates[0].start_date, "YYYYMMDD").format("DD MMMM YYYY");
-        }
-        if(post.acf.repeater_dates && post.acf.repeater_dates[0].end_date) {
-          post.end_date = moment(post.acf.repeater_dates[0].end_date, "YYYYMMDD").format("DD MMMM YYYY");
-        }
-
+        this.massagePost(post);
       }
 
       this.posts = data;
@@ -93,6 +87,8 @@ export class EventsPage {
         if(!loading) {
           infiniteScroll.complete();
         }
+        
+        this.massagePost(post);
 
         this.posts.push(post);
         loading = false;
@@ -107,7 +103,7 @@ export class EventsPage {
     });
   }
 
-  viewPost(event, post){
+  viewPost(post){
     this.navCtrl.push(EventPage, { post: post });
   }
 
@@ -115,6 +111,16 @@ export class EventsPage {
     this.cache.clearGroup(this.postType).then(() => {
       this.getEventPosts(refresher);
     });
+  }
+
+  massagePost(post){
+    if(post.acf.repeater_dates && post.acf.repeater_dates[0].start_date) {
+      post.start_date = moment(post.acf.repeater_dates[0].start_date, "YYYYMMDD").format("DD MMMM YYYY");
+    }
+    if(post.acf.repeater_dates && post.acf.repeater_dates[0].end_date) {
+      post.end_date = moment(post.acf.repeater_dates[0].end_date, "YYYYMMDD").format("DD MMMM YYYY");
+    }
+    post.excerpt = this.config.excerpt(this.config.stripTags(post.content.rendered), 200, "...");
   }
 
 }
